@@ -3,10 +3,10 @@ FROM ubuntu:14.04
 ARG username="aosp"
 ARG password="password"
 
+ARG DEBIAN_FRONTEND=noninteractive
+
 RUN echo "dash dash/sh boolean false" | debconf-set-selections \
 	&& dpkg-reconfigure -p critical dash
-
-ARG DEBIAN_FRONTEND=noninteractive
 
 RUN \
 	apt-get update \
