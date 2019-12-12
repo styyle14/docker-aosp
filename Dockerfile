@@ -1,5 +1,8 @@
 FROM ubuntu:14.04
 
+ARG username="aosp"
+ARG password="password"
+
 RUN echo "dash dash/sh boolean false" | debconf-set-selections \
 	&& dpkg-reconfigure -p critical dash
 
@@ -40,14 +43,25 @@ RUN \
 ADD \
 	https://commondatastorage.googleapis.com/git-repo-downloads/repo \
 	/usr/local/bin/
-RUN chmod 755 /usr/local/bin/repo
+RUN \
+	chmod 755 /usr/local/bin/repo
 
-RUN useradd --create-home aosp
+RUN \
+	useradd \
+		--create-home \
+		--groups \
+			sudo \
+		"${username}" && \
+	echo "${username}:${password}" | chpasswd
 
-VOLUME ["/home/aosp/.ccache", "/home/aosp/workspace"]
+VOLUME \
+	[ \
+		"/home/${username}/.ccache", \
+		"/home/${username}/workspace" \
+	]
 
 ENV USE_CCACHE 1
-ENV CCACHE_DIR /home/aosp/.ccache
+ENV CCACHE_DIR /home/${username}/.ccache
 
-USER aosp
-WORKDIR /aosp
+USER ${username}
+WORKDIR /home/${username}/workspace
