@@ -29,6 +29,7 @@ RUN \
 		libgl1-mesa-dev \
 		libx11-dev \
 		libxml2-utils \
+		python \
 		unzip \
 		x11proto-core-dev \
 		xsltproc \
@@ -62,6 +63,9 @@ VOLUME \
 
 ENV USE_CCACHE 1
 ENV CCACHE_DIR /home/${username}/.ccache
+RUN \
+	git config --global user.name "Your Name" \
+	&& git config --global user.email "you@example.com"
 
 USER ${username}
 WORKDIR /home/${username}/workspace
