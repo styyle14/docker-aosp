@@ -23,6 +23,8 @@ RUN \
 		git-core \
 		gnupg \
 		gperf \
+		fontconfig \
+		libfreetype6 \
 		lib32ncurses5-dev \
 		lib32z-dev \
 		libc6-dev-i386 \
