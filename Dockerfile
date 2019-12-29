@@ -16,6 +16,7 @@ RUN \
 	apt-get install -y  \
 		bison \
 		build-essential \
+		ccache \
 		curl \
 		flex \
 		g++-multilib \
@@ -64,10 +65,14 @@ VOLUME \
 	]
 
 ENV USE_CCACHE 1
+ENV CCACHE_EXEC /usr/bin/ccache
 ENV CCACHE_DIR /home/${username}/.ccache
+
 RUN \
-	git config --global user.name "Your Name" \
-	&& git config --global user.email "you@example.com"
+	su - "${username}"  -c \
+		'git config --global user.name "Your Name" ' \
+	&& su - "${username}"  -c \
+		'git config --global user.email "you@example.com"'
 
 USER ${username}
 WORKDIR /home/${username}/workspace
