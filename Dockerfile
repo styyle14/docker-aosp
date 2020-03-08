@@ -1,4 +1,4 @@
-FROM ubuntu:14.04
+FROM ubuntu:20.04
 
 ARG username="aosp"
 ARG password="password"
@@ -32,7 +32,8 @@ RUN \
 		libgl1-mesa-dev \
 		libx11-dev \
 		libxml2-utils \
-		python \
+		python3 \
+		sudo \
 		unzip \
 		x11proto-core-dev \
 		xsltproc \
@@ -43,6 +44,9 @@ RUN \
 		/var/lib/apt/lists/* \
 		/tmp/* \
 		/var/tmp/*
+
+RUN \
+	update-alternatives --install /usr/bin/python python /usr/bin/python3 1
 
 ADD \
 	https://commondatastorage.googleapis.com/git-repo-downloads/repo \
